@@ -1,0 +1,33 @@
+{% load django_markdown %}
+<div id="entry_list ">
+<ul >
+{% for object in object_list %}
+  <div class="post thumbnail">
+    <h2><a href="{% url "entry_detail" slug=object.slug %}">{{ object.title }}</a></h2>
+    <p class="meta">
+      {{ object.created_date }} |
+      Etiquetas: {{  object.tags.all|join:", " }}
+    </p>
+    {{ object.body|markdown|truncatewords:50 }} <a href="{% url "entry_detail" slug=object.slug %}">leer más</a>
+  </div>
+{% endfor %}
+</ul>
+<div class="pagination">
+    <span class="step-links">
+        <div class="btn-group inline pull-left" data-toggle="buttons-checkbox"> 
+        {% if object_list.has_previous %}
+            <a href="?page={{ object_list.previous_page_number }}" role="button" class="btn btn-primary">Anterior</a>
+        {% else %}
+            <button type="button" class="btn btn-primary" disabled="disabled">Anterior</button>
+         {% endif %}
+        {% if object_list.has_next %}
+            <a href="?page={{ object_list.next_page_number }}" role="button" class="btn btn-primary" >Siguiente</a>
+        {% else %}
+            <button type="button" class="btn btn-primary" disabled="disabled">Siguiente</button>
+         {% endif %}
+            
+        </div>
+        <strong>&nbsp;&nbsp;Mostrando página {{ object_list.number }} de {{ object_list.paginator.num_pages }}</strong>
+    </span>
+</div>
+</div>

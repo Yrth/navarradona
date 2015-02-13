@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load django_markdown %}
+{% block page_title %}
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="http://www.art-prints-gallery.com/desktop_wallpapers/mutiple_screen/dual_screen/images/w-a-l-l-p-1-1280x480.jpg" alt="Chania">
+      <div class="carousel-caption">
+          <h1>Caption Text</h1>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="http://www.art.eonworks.com/free/wallpapers/1280x1024/Ancient_ruins-1280x480.jpg" alt="Chania">
+    </div>
+
+    <div class="item">
+      <img src="http://www.creeksbendphotos.com/wp-content/uploads/2014/05/5Z5A4172-1280x480.jpg" alt="Flower">
+    </div>
+<!--
+    <div class="item">
+      <img src="/media/ADONA.png" alt="Flower">
+    </div>-->
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+</div>
+{% endblock %}
+
+{% block blog_entries %}
+{% if object_list|length > 0 %}
+  <div id="entry_list">
+
+  <div class="row">
+    <div class="span8">
+      <div class="thumbnail" >
+        <a href="#" class="pull-left">
+            <img src="{{ object_list.0.images.all.0 }}" width="160px" class="media-object img-circle">
+
+        </a>
+
+        <div class="media-body">
+
+            <h2 class="media-heading"><a href="{% url "entry_detail" slug=object_list.0.slug %}">{{ object_list.0.title }}</a><br><small><i>{{ object_list.0.created_date }} |
+            Etiquetas: {{  object_list.0.tags.all|join:", " }}</i></small></h2>
+
+            <p>{{ object_list.0.body|markdown|truncatewords:57 }} <a href="{% url "entry_detail" slug=object_list.0.slug %}">leer más</a></p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+      {% if object_list|length > 1 %}
+      <div class="row">
+        <div class="span4">
+
+          <div class="thumbnail" >
+            <a href="#" class="">
+                <img src="{{ object_list.1.images.all.0 }}" width="160px" class="media-object img-circle">
+
+            </a>
+
+            <div class="media-body">
+
+                <h2 class="media-heading"><a href="{% url "entry_detail" slug=object_list.1.slug %}">{{ object_list.1.title }}</a><br><small><i>{{ object_list.1.created_date }} |
+                Etiquetas: {{  object_list.1.tags.all|join:", " }}</i></small></h2>
+
+                <p>{{ object_list.1.body|markdown|truncatewords:35 }} <a href="{% url "entry_detail" slug=object_list.1.slug %}">leer más</a></p>
+
+            </div>
+          </div>
+        </div>
+        {% if object_list|length > 2 %}
+        <div class="span4">
+          <div class="thumbnail" >
+            <a href="#" class="">
+                <img src="{{ object_list.2.images.all.0 }}" width="160px" class="media-object img-circle">
+
+            </a>
+
+            <div class="media-body">
+
+                <h2 class="media-heading"><a href="{% url "entry_detail" slug=object_list.2.slug %}">{{ object_list.2.title }}</a><br><small><i>{{ object_list.2.created_date }} |
+                Etiquetas: {{  object_list.2.tags.all|join:", " }}</i></small></h2>
+
+                <p>{{ object_list.2.body|markdown|truncatewords:35 }} <a href="{% url "entry_detail" slug=object_list.2.slug %}">leer más</a></p>
+
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+  </div>
+{% else %}
+    No hay post aun.
+{% endif %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.carousel').carousel();
+    });
+</script>
+{% endblock %}
+
+{% block scripts %}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+
+$(document).ready(function(){
+    $('.carousel').carousel();
+
+  });
+ var currentTallest = 0,
+     currentRowStart = 0,
+     rowDivs = new Array(),
+     $el,
+     topPosition = 0;
+
+
+ $('.thumbnail').each(function() {
+
+   $el = $(this);
+   topPostion = $el.position().top;
+   
+   if (currentRowStart != topPostion) {
+
+     // we just came to a new row.  Set all the heights on the completed row
+     for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+       rowDivs[currentDiv].height(currentTallest);
+     }
+
+     // set the variables for the new row
+     rowDivs.length = 0; // empty the array
+     currentRowStart = topPostion;
+     currentTallest = $el.height();
+     rowDivs.push($el);
+
+   } else {
+
+     // another div on the current row.  Add it to the list and check if it's taller
+     rowDivs.push($el);
+     currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
+
+  }
+   
+  // do the last row
+   for (currentDiv = 1 ; currentDiv < rowDivs.length ; currentDiv++) {
+     rowDivs[currentDiv].height(currentTallest);
+   }
+   
+ });
+
+</script>
+
+<style type="text/css">
+    .jcarousel {
+    position: relative;
+    overflow: hidden;
+
+
+}
+
+.jcarousel ul {
+    width: 20000em;
+    position: relative;
+
+    /* Optional, required in this case since it's a <ul> element */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.jcarousel li {
+    /* Required only for block elements like <li>'s */
+    float: left;
+}
+
+
+</style>
+{% endblock %}

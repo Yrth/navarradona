@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load django_markdown %}
+
+{% block page_title %}
+    
+    <div class="well">
+        <h1>Blog</h1>
+    </div>
+
+{% endblock %}
+
+{% block blog_entries %}
+
+  <div class="post thumbnail">
+    <h2><a href="{% url "entry_detail" slug=slug %}">{{ object.title }}</a></h2>
+    <p class="meta">
+      {{ object.created_date }} |
+      Etiquetas: {{  object.tags.all|join:", " }}
+    </p>
+    {{ object.body|markdown }}
+  
+
+  <!-- Comments Form -->
+    <div class="well">
+    <h4>Escribe un comentario:</h4>
+        <form role="form" id="comment_form">
+            {% csrf_token %}
+            <br>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">@</span>
+              <input id="text_input" type="text" class="form-control" placeholder="Usuario" aria-describedby="basic-addon1">
+            </div>
+            <br>
+            <div class="form-group">
+                <textarea id="textarea_input" placeholder="Comentario" class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+
+    
+
+    <!-- Posted Comments -->
+            <hr>
+    <div id="comments">
+
+    {% for comment in comments reversed %}
+        {% include "comments.html" %}
+    {% endfor %}
+    </div>
+    <!-- Comment -->
+    </div>
+                
+{% endblock %}
+
+
+{% block scripts%}
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script >
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        var user="";
+        var text="";
+
+        $('#comment_form').on('submit', function(event){
+                event.preventDefault();
+                text=$('#textarea_input').val();
+                user=$('#text_input').val();
+                $('#textarea_input').val('');
+                $('#text_input').val('');
+                //alert("Vas a mandar: " + tag +", "+title);
+                create_post();
+            });
+        function create_post() {
+            $.ajax({
+                url : "", // the endpoint
+                type : "POST", // http method
+                data : { text : text, user:user }, // data sent with the post request
+
+                // handle a successful response
+                success : function(json) {
+
+                    $("#comments").prepend($(json).hide().fadeIn(1000));
+                },
+
+                // handle a non-successful response
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+
+        };
+    </script>
+{% endblock %}

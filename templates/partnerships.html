@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load django_markdown %}
+{% load staticfiles%}
+
+{% block page_title %}
+    
+    <div class="well">
+        <h1>Asociaciones que hacen posible esta iniciativa</h1>
+    </div>
+
+{% endblock %}
+{% block blog_entries %} 
+
+
+
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="{% static "icons/partners/ADONA.png" %}" alt="a">
+      <div class="caption">
+        <p>ADONA tiene por objetivo promocionar la donación y convertirla en un proyecto sólido y duradero donde se encuentren los caminos de los que necesitan sangre, de los que ya son donantes y de los que podrían serlo.</p><br>
+      </div>
+      <p class="special"><a href="http://www.adona.es/es/" class="btn btn-primary" role="button">Visitar</a> </p>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="{% static "icons/partners/Alcer_Navarra.png" %}" alt="a">
+      <div class="caption">
+        <p>ALCER Navarra es una asociación reconocida como entidad de discapacidad orgánica, creada con el fin de ayudar a los pacientes renales de Navarra y tratar de promover actividades para mejorar la calidad de vida de los enfermos renales en cualquiera de sus patologías...
+      </div><br>
+      <p class="special"><a href="http://www.alcernavarra.org/" class="btn btn-primary" role="button">Visitar</a> </p>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="{% static "icons/partners/DOMENA.png" %}" alt="a">
+      <div class="caption">
+        <p>Asociación destinada a promover y facilitar las donaciones de médula ósea y células madre. Con el objetivo de dar a conocer a la sociedad  las cuestiones que plantean las donaciones y los trasplantes de médula ósea, las enfermedades relacionadas y las implicaciones sociales.</p>
+      </div>
+      <p class="special"><a href="http://www.asociaciondomena.com/" class="btn btn-primary" role="button">Visitar</a> </p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="{% static "icons/partners/afq.png" %}" alt="a">
+      <div class="caption">
+        <p>Asociación destinada a contribuir al conocimiento, estudio y asistencia de la Fibrosis Quística, también llamada mucoviscidosis así como al cuidado, asistencia y protección, tanto social como asistencial, de las personas que padecen esta enfermedad.</p>
+      </div>
+      <p class="special"><a href="https://www.facebook.com/fqnavarra" class="btn btn-primary" role="button">Visitar</a></p>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="{% static "icons/partners/fat3.png" %}" alt="a">
+      <div class="caption">
+        <p>Asociación dedicada a la defensa y ayuda de enfermos y trasplantados hepáticos así como al fomento de la donación de órganos en Navarra.</p>
+      </div><br>
+      <p class="special"><a href="https://www.facebook.com/atehna2010/" class="btn btn-primary" role="button">Visitar</a> </p>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="{% static "icons/partners/fdn2.png" %}" alt="a">
+      <div class="caption">
+        <p>Fundación que tiene por objetivo favorecer el desarrollo de la sociedad navarra, en materia de cultura, cooperación, emprendimiento y educación. Además la Fundación tiene la capacidad y la responsabilidad de hacer de su misión algo relevante para la sociedad y que ésta participe de ello.</p>
+      </div>
+      <p class="special"><a href="http://www.fundaciondn.org/" class="btn btn-primary" role="button">Visitar</a> </p>
+    </div>
+  </div>
+</div>
+
+
+
+<!--
+<div class="row">
+  <div class="col-xs-6 col-md-3">
+    <a href="http://www.adona.es/es/" class="thumbnail">
+      <img src="{% static "icons/partners/ADONA.png" %}" alt="My image"/>
+    </a>
+  </div>
+  En <a href="http://www.adona.es/es/">ADONA</a> entendemos la donación como un acto social, participativo a todos los niveles y sobre todo generoso que permite salvar vidas o mejorar el estado de salud de muchos enfermos. Desde que nació la Asociación en 1957 hasta hoy nuestra razón de ser es la misma: promocionar la donación y convertirla en un proyecto sólido y duradero donde se encuentren los caminos de los que necesitan sangre, de los que ya son donantes y de los que podrían serlo.
+</div>
+
+<div class="row">
+  <div class="col-xs-6 col-md-3">
+    <a href="#" class="thumbnail">
+      <img src="{% static "icons/partners/Alcer_Navarra.png" %}" alt="My image"/>
+    </a>
+  </div>
+ALCER Navarra, Asociación para la Lucha Contra las Enfermedades Renales, es una asociación sin ánimo de lucro, declarada de utilidad pública y reconocida como entidad de discapacidad orgánica, creada con el fin de ayudar, asesorar e informar a los pacientes renales de Navarra sobre su enfermedad y tratar de promover actividades para mejorar la calidad de vida de los enfermos renales en cualquiera de sus patologías. Así mismo, se ocupa de la sensibilización a favor de la donación de órganos, tanto de vivo como de cadáver, para el trasplante a personas en estadios avanzados de insuficiencia renal.</div>
+
+<div class="row">
+  <div class="col-xs-6 col-md-3">
+    <a href="#" class="thumbnail">
+      <img src="{% static "icons/partners/afq.png" %}" alt="My image"/>
+    </a>
+  </div>
+La asociación de Fibriosis Quística de Navarra está destinada a contribuir al conocimiento, estudio y asistencia de la Fibrosis Quística, también llamada mucoviscidosis así como al cuidado, asistencia y protección, tanto social como asistencial, de las personas que padecen esta enfermedad.  Crear y fomentar la acogida, orientación e información, tanto de las personas con Fibriosis Quística como de los familiares a cargo de su tutela y dar publicidad y divulgación de los problemas humanos, psicológicos y sociales de las personas que sufren la enfermedad. </div>
+
+<div class="row">
+  <div class="col-xs-6 col-md-3">
+    <a href="#" class="thumbnail">
+      <img src="{% static "icons/partners/DOMENA.png" %}" alt="My image"/>
+    </a>
+  </div>
+Asociación Eduardo Domezáin de donantes de médula en Navarra, destinada a promover y facilitar las donaciones de médula ósea y células madre. Una asociación que tiene como objetivo dar a conocer a la sociedad, en todos sus ámbitos, las cuestiones y problemas que plantean las donaciones y los trasplantes de médula ósea, las enfermedades con ellos relacionadas, los procedimientos terapéuticos, las implicaciones sociales y cualesquiera otros aspectos relacionados con el tema así como realizar campañas de concienciación social sobre cualquier cuestión relacionada con las donaciones y los trasplantes de médula ósea, bien para promover y extender su práctica, bien para recabar recursos con este fin. </div>
+
+<div class="row">
+  <div class="col-xs-6 col-md-3">
+    <a href="#" class="thumbnail">
+      <img src="{% static "icons/partners/fdn.png" %}" alt="My image"/>
+    </a>
+  </div>
+La Fundación Diario de Navarra es la que une, con más fuerza que nunca, las diferentes áreas que conforman el Grupo La Información y que la convierten en una iniciativa única. La misión de la Fundación favorecer el desarrollo de la sociedad en general, en especial de la navarra, en materia de cultura, cooperación, emprendimiento y educación. Para ello, además de la suma de las ilusiones, esfuerzos e ideas de un gran equipo, la Fundación tiene la capacidad y la responsabilidad de hacer de su misión y sus proyectos algo relevante para la sociedad y que ésta participe de ello.</div>
+
+<div class="row">
+  <div class="col-xs-6 col-md-3">
+    <a href="#" class="thumbnail">
+      <img src="{% static "icons/partners/fat.png" %}" alt="My image"/>
+    </a>
+  </div>
+Fundación Atena es una fundación privada sin ánimo de lucro creada en 2001 por un grupo de familiares de personas con discapacidad.. Nuestra misión es promover y fomentar el desarrollo integral de las personas con discapacidad a través del arte mejorando su calidad de vida y acompañándoles en su proyecto vital.</div>
+
+-->
+<style type="text/css">
+ .special {position:absolute; bottom:0;  margin-top:7px; margin-bottom:7px;display:inline-block; left:23%;}
+
+
+ </style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var currentTallest = 0,
+     currentRowStart = 0,
+     rowDivs = new Array(),
+     $el,
+     topPosition = 0;
+
+ $('.thumbnail').each(function() {
+
+   $el = $(this);
+   topPostion = $el.position().top;
+   
+   if (currentRowStart != topPostion) {
+
+     // we just came to a new row.  Set all the heights on the completed row
+     for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+       rowDivs[currentDiv].height(currentTallest);
+     }
+
+     // set the variables for the new row
+     rowDivs.length = 0; // empty the array
+     currentRowStart = topPostion;
+     currentTallest = $el.height();
+     rowDivs.push($el);
+
+   } else {
+
+     // another div on the current row.  Add it to the list and check if it's taller
+     rowDivs.push($el);
+     currentTallest = (currentTallest < $el.height()) ? ($el.height()) : (currentTallest);
+
+  }
+   
+  // do the last row
+   for (currentDiv = 0 ; currentDiv < rowDivs.length ; currentDiv++) {
+     rowDivs[currentDiv].height(currentTallest);
+   }
+   
+ });
+</script>
+{% endblock %}

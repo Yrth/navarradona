@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load django_markdown %}
+
+{% block page_title %}
+    
+    <div class="well">
+        <h1>Blog</h1>
+    </div>
+
+{% endblock %}
+{% block blog_entries %}
+
+
+{% include "filter.html" %}
+
+<div id="entry_list">
+<ul >
+{% for object in object_list %}
+  <div class="post  thumbnail">
+    <h2><a href="{% url "entry_detail" slug=object.slug %}">{{ object.title }}</a></h2>
+    <p class="meta">
+      {{ object.created_date }} |
+      Etiquetas: {{  object.tags.all|join:", " }}
+    </p>
+    {{ object.body|markdown|truncatewords:50 }} <a href="{% url "entry_detail" slug=object.slug %}">leer más</a>
+  </div>
+{% endfor %}
+</ul>
+<div class="pagination">
+    <span class="step-links">
+        <div class="btn-group inline pull-left" data-toggle="buttons-checkbox"> 
+        {% if object_list.has_previous %}
+            <a href="?page={{ object_list.previous_page_number }}" role="button" class="btn btn-primary">Anterior</a>
+        {% else %}
+            <button type="button" class="btn btn-primary" disabled="disabled">Anterior</button>
+         {% endif %}
+        {% if object_list.has_next %}
+            <a href="?page={{ object_list.next_page_number }}" role="button" class="btn btn-primary" >Siguiente</a>
+        {% else %}
+            <button type="button" class="btn btn-primary" disabled="disabled">Siguiente</button>
+         {% endif %}
+            
+        </div>
+        <strong>&nbsp;&nbsp;Mostrando página {{ object_list.number }} de {{ object_list.paginator.num_pages }}</strong>
+    </span>
+</div>
+</div>
+
+
+{% endblock %}
+{% block scripts%}
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script >
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+        var tag="";
+        var title="";
+        $('#listaguay li').on('click', function ()
+            {
+                var selected = $(this).text();
+                tag=selected;
+                $('#etiquetas').text(selected);
+            });
+        $('#post-form').on('submit', function(event){
+                event.preventDefault();
+                title=$('#input_text').val();
+                //alert("Vas a mandar: " + tag +", "+title);
+                create_post();
+                return false;
+            });
+        function create_post() {
+            console.log("create post is working!") // sanity check
+            console.log(tag+title)
+            $.ajax({
+                url : "", // the endpoint
+                type : "POST", // http method
+                data : { tag : tag, title:title }, // data sent with the post request
+
+                // handle a successful response
+                success : function(json) {
+                    //$('#post-text').val(''); // remove the value from the input
+                    console.log(json); // log the returned json to the console
+                    console.log("success"); // another sanity check
+                    //document.html(json)
+                    $("#entry_list").fadeOut(duration=1000,function(){
+                      $(this).html(json).fadeIn(duration=1000);
+                    });
+                    //$('#entry_list').load(json);
+                        //$(this).load(json, function() {
+                          //   $(this).fadeIn('slow');
+                        // });
+                    // });
+                },
+
+                // handle a non-successful response
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+
+        };
+    </script>
+{% endblock %}
+
+
+
+
+
+
